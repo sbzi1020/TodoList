@@ -11,6 +11,11 @@ export const generateStyles = makeStyles({
         position: 'absolute',
         right: '1rem',
         width: 10,
+        color: '#a7a7a7',
+        cursor: 'pointer',
+        "&:hover": {
+            color: '#ea4c88',
+        }
     },
     icon: {
         borderRadius: 6,
@@ -33,14 +38,18 @@ export const generateStyles = makeStyles({
             content: '""',
         },
         'input:hover ~ &': {
-            backgroundColor:  '#ea4c88',
+            backgroundColor: '#ea4c88',
         }
     },
+    //     'input:hover ~ &': {
+    //         backgroundColor:  '#ea4c88',
+    //     }
+    // },
     text: {
-        fontSize: '1rem',
+        fontSize: '0.8rem',
     },
     checkedText: {
         opacity: '0.4',
-        fontSize: '1rem',
+        fontSize: '0.8rem',
     }
 })

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import TodoItemComponent from './TodoItem'
 import { TodoItem } from '../types/types'
 import LayoutStyles from '../styles/layout.module.css'
@@ -9,6 +9,7 @@ const TodoList = () => {
     const classes = generateStyles()
     const [uiState, setUiState] = useState(TodoListStateService.getLatest())
     const [inputValue, setInputValue] = useState('')
+    const inputRef = useRef(null)
 
     // Subscription
     useEffect(() => {
@@ -19,10 +20,13 @@ const TodoList = () => {
     }, [])
     const onAddItem = () => {
         TodoListStateService.addItem({
-            id: (new Date()).getTime().toString(),
+            id: '',
             text: inputValue,
             isFinished: false,
-        })
+        }, () => {
+                if (inputRef.current) {
+                    ( inputRef.current as any).value =''                }
+        } )
     }
     const onCheckboClick = (item: TodoItem) => {
         const checkItem = {
@@ -35,15 +39,23 @@ const TodoList = () => {
     const renderList = () => {
         return (
             uiState.list.map((item, index) => (
-            <TodoItemComponent
-                key={index}
-                item={item}
-                onCheckboxClick={onCheckboClick}
-            />
+                <TodoItemComponent
+                    key={index}
+                    item={item}
+                    onCheckboxClick={onCheckboClick}
+                    onDeletedClick={onDeletedClick}
+                />
             ))
         )
     }
-
+    const onDeletedClick = (item: TodoItem) => {
+       TodoListStateService.deleteItem(item) 
+    }
+const onKeyDown = (e: any) => {
+        if (e.key === 'Enter') {
+            onAddItem()
+        }
+}
     return (
         <div className={`${LayoutStyles.vBoxContainer} ${classes.listContainer}`}>
             <div>
@@ -51,14 +63,18 @@ const TodoList = () => {
                 {/* SearchBar */}
             </div>
             {/* List Item */}
-        <div className={`${classes.renderList}`}>
-            {renderList()}
+            <div className={`${classes.renderList}`}>
+                {renderList()}
             </div>
             {/* Add Section */}
-            <div>
-                <input type="text" onChange={e => setInputValue(e.target.value.trim())}/>
-                <button onClick={onAddItem}>Add</button>
-            </div>
+            <input
+                type="text"
+                onChange={e => setInputValue(e.target.value.trim())}
+                placeholder='Things to do...'
+                ref={inputRef}
+                onKeyDown={onKeyDown}
+            />
+            <button onClick={onAddItem}>Add</button>
         </div>)
 }
 

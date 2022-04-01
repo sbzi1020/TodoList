@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import { TodoItem } from '../types/types'
 import LayoutStyles from '../styles/layout.module.css'
 import { generateStyles } from '../styles//todoItem.styles'
@@ -12,6 +12,7 @@ import clsx from 'clsx'
 export interface TodoItemProps {
     item: TodoItem,
     onCheckboxClick: (item: TodoItem) => void
+    onDeletedClick: (item: TodoItem) => void
 }
 
 /**
@@ -21,21 +22,25 @@ export interface TodoItemProps {
 
 const TodoItemComponent = (props: TodoItemProps) => {
     const classes = generateStyles()
-
     return (
         <div className={`${LayoutStyles.hBoxContainer} ${classes.itemContainer}`}>
-            <input
-                type='checkbox'
+            <Checkbox
                 checked={props.item.isFinished}
                 onClick={() => props.onCheckboxClick(props.item)}
+                disableRipple
+                inputProps={{ 'aria-label': 'primary checkbox' }}
+                icon={<span className={classes.icon} />}
+                checkedIcon={<span className={clsx(classes.icon, classes.checkedIcon)} />}
 
             />
-            <div 
-                className={props.item.isFinished ? `${classes.checkedText}`: `${classes.text}`}>
-                {props.item.text}
+            <div
+                className={props.item.isFinished ? `${classes.checkedText}` : `${classes.text}`}>
+                {`${props.item.id} ${props.item.text}`}
             </div>
             <div className={classes.deleteItem}>
-                <DeleteIcon />
+                <DeleteIcon
+                    onClick={() => props.onDeletedClick(props.item)}
+                />
             </div>
         </div>
     )
