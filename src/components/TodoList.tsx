@@ -24,9 +24,10 @@ const TodoList = () => {
             text: inputValue,
             isFinished: false,
         }, () => {
-                if (inputRef.current) {
-                    ( inputRef.current as any).value =''                }
-        } )
+            if (inputRef.current) {
+                (inputRef.current as any).value = ''
+            }
+        })
     }
     const onCheckboClick = (item: TodoItem) => {
         const checkItem = {
@@ -49,13 +50,13 @@ const TodoList = () => {
         )
     }
     const onDeletedClick = (item: TodoItem) => {
-       TodoListStateService.deleteItem(item) 
+        TodoListStateService.deleteItem(item)
     }
-const onKeyDown = (e: any) => {
+    const onKeyDown = (e: any) => {
         if (e.key === 'Enter') {
             onAddItem()
         }
-}
+    }
     return (
         <div className={`${LayoutStyles.vBoxContainer} ${classes.listContainer}`}>
             <div>
@@ -67,14 +68,16 @@ const onKeyDown = (e: any) => {
                 {renderList()}
             </div>
             {/* Add Section */}
-            <input
-                type="text"
-                onChange={e => setInputValue(e.target.value.trim())}
-                placeholder='Things to do...'
-                ref={inputRef}
-                onKeyDown={onKeyDown}
-            />
-            <button onClick={onAddItem}>Add</button>
+        <div className={`${LayoutStyles.hBoxContainer} ${classes.addContainer}`}>
+                <input
+                    type="text"
+                    onChange={e => setInputValue(e.target.value.trim())}
+                    placeholder='Things to do...'
+                    ref={inputRef}
+                    onKeyDown={onKeyDown}
+                />
+                <button onClick={onAddItem}>Add</button>
+            </div>
         </div>)
 }
 
