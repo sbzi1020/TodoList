@@ -7,5 +7,9 @@ export const generateStyles = makeStyles({
     },
     mainView: {
         border: '1px solid blue',
+        alignItems: 'center',
+    },
+    topbar: {
+        backgroundColor: 'pink',
     }
 })

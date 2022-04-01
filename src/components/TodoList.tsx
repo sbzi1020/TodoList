@@ -2,27 +2,47 @@ import React, { useState, useEffect } from 'react'
 import TodoItemComponent from './TodoItem'
 import { TodoItem } from '../types/types'
 import LayoutStyles from '../styles/layout.module.css'
-import {generateStyles} from '../styles/todoList.styles'
-import {TodoListStateService} from '../states/todoList-state-service'
+import { generateStyles } from '../styles/todoList.styles'
+import { TodoListStateService } from '../states/todoList-state-service'
 
-/**
- * @export
- * @interface TodoListProps
- */
-export interface TodoListProps {
-}
-
-/**
- * 
- * @param {TodoList}Props props 
- */
-const TodoList = (props: TodoListProps) => {
+const TodoList = () => {
     const classes = generateStyles()
-    const [state, setState] = useState()
+    const [uiState, setUiState] = useState(TodoListStateService.getLatest())
+    const [inputValue, setInputValue] = useState('')
 
+    // Subscription
     useEffect(() => {
-
+        let subscription = TodoListStateService.$state.subscribe(
+            latestate => setUiState(latestate)
+        )
+        return () => subscription.unsubscribe()
     }, [])
+    const onAddItem = () => {
+        TodoListStateService.addItem({
+            id: (new Date()).getTime().toString(),
+            text: inputValue,
+            isFinished: false,
+        })
+    }
+    const onCheckboClick = (item: TodoItem) => {
+        const checkItem = {
+            ...item,
+            isFinished: !item.isFinished,
+        }
+        TodoListStateService.updateItem(checkItem)
+    }
+
+    const renderList = () => {
+        return (
+            uiState.list.map((item, index) => (
+            <TodoItemComponent
+                key={index}
+                item={item}
+                onCheckboxClick={onCheckboClick}
+            />
+            ))
+        )
+    }
 
     return (
         <div className={`${LayoutStyles.vBoxContainer} ${classes.listContainer}`}>
@@ -31,11 +51,13 @@ const TodoList = (props: TodoListProps) => {
                 {/* SearchBar */}
             </div>
             {/* List Item */}
-            <TodoItemComponent />
+        <div className={`${classes.renderList}`}>
+            {renderList()}
+            </div>
             {/* Add Section */}
             <div>
-                <input type="text" />
-                <button >Add</button>
+                <input type="text" onChange={e => setInputValue(e.target.value.trim())}/>
+                <button onClick={onAddItem}>Add</button>
             </div>
         </div>)
 }
