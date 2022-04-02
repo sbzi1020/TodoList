@@ -4,6 +4,7 @@ import { TodoItem } from '../types/types'
 import LayoutStyles from '../styles/layout.module.css'
 import { generateStyles } from '../styles/todoList.styles'
 import { TodoListStateService } from '../states/todoList-state-service'
+import { ToDoListUtil } from '../utils/todo_list_util'
 
 const TodoList = () => {
     const classes = generateStyles()
@@ -18,16 +19,25 @@ const TodoList = () => {
         )
         return () => subscription.unsubscribe()
     }, [])
-    const onAddItem = () => {
-        TodoListStateService.addItem({
+
+    //
+    const onAddItem = async () => {
+        const newItem = {
             id: '',
             text: inputValue,
             isFinished: false,
-        }, () => {
-            if (inputRef.current) {
-                (inputRef.current as any).value = ''
-            }
-        })
+        }
+
+        // Save to backend
+        const addResult = await ToDoListUtil.addToDoItem(newItem)
+
+        if (addResult.success === true) {
+            TodoListStateService.addItem(newItem, () => {
+                if (inputRef.current) {
+                    (inputRef.current as any).value = ''
+                }
+            })
+        }
     }
     const onCheckboClick = (item: TodoItem) => {
         const checkItem = {
@@ -68,7 +78,7 @@ const TodoList = () => {
                 {renderList()}
             </div>
             {/* Add Section */}
-        <div className={`${LayoutStyles.hBoxContainer} ${classes.addContainer}`}>
+            <div className={`${LayoutStyles.hBoxContainer} ${classes.addContainer}`}>
                 <input
                     type="text"
                     onChange={e => setInputValue(e.target.value.trim())}
