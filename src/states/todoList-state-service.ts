@@ -1,5 +1,6 @@
 import { BehaviorSubject } from 'rxjs'
 import { TodoItem, TodoList } from '../types/types'
+import { ToDoListUtil } from '../utils/todo_list_util'
 
 let latestId = 0
 
@@ -30,19 +31,37 @@ export const TodoListStateService = ({
 
     getLatest: (): TodoListState => latestState,
 
-    addItem: (item: TodoItem, callback: any) => {
+    addItem: async (itemText: string, callback: any) => {
+        const newItem: TodoItem = {
+            docId: '',
+            id: '',
+            text: itemText,
+            isFinished: false,
+        }
+
+        // Save to backend
+        const addResult = await ToDoListUtil.addToDoItem(newItem)
+        if (addResult.success === true) {
+            if (typeof addResult.data === "string") {
+                newItem.docId = addResult.data
+            }
+        }
+
+        // update state
         const newList = [
             ...stateSource.value.list,
             {
-                ...item,
+                ...newItem,
                 id: genernateId(),
             }
         ]
+
         emitNextState({ list: newList })
-        if (callback) {callback()}
+        if (callback) { callback() }
     },
 
     updateItem: (item: TodoItem) => {
+
         const newList = stateSource.value.list.map((tempItem) => {
             if (tempItem.docId === item.docId) {
                 return item

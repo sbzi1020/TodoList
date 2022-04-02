@@ -4,7 +4,6 @@ import { TodoItem } from '../types/types'
 import LayoutStyles from '../styles/layout.module.css'
 import { generateStyles } from '../styles/todoList.styles'
 import { TodoListStateService } from '../states/todoList-state-service'
-import { ToDoListUtil } from '../utils/todo_list_util'
 
 const TodoList = () => {
     const classes = generateStyles()
@@ -25,27 +24,11 @@ const TodoList = () => {
 
     //
     const onAddItem = async () => {
-        const newItem: TodoItem = {
-            docId: '',
-            id: '',
-            text: inputValue,
-            isFinished: false,
-        }
-
-        // Save to backend
-        const addResult = await ToDoListUtil.addToDoItem(newItem)
-
-        if (addResult.success === true) {
-            if (typeof addResult.data === "string") {
-                newItem.docId = addResult.data
+        await TodoListStateService.addItem(inputValue, () => {
+            if (inputRef.current) {
+                (inputRef.current as any).value = ''
             }
-
-            TodoListStateService.addItem(newItem, () => {
-                if (inputRef.current) {
-                    (inputRef.current as any).value = ''
-                }
-            })
-        }
+        })
     }
     const onCheckboClick = (item: TodoItem) => {
         const checkItem = {

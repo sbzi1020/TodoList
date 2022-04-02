@@ -1,4 +1,4 @@
-import { TodoItem, TodoList } from '../types/types'
+import { TodoItem } from '../types/types'
 import { LogUtil, LogTheme } from './log_util'
 
 const axios = require('axios').default
