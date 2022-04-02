@@ -44,7 +44,7 @@ export const TodoListStateService = ({
 
     updateItem: (item: TodoItem) => {
         const newList = stateSource.value.list.map((tempItem) => {
-            if (tempItem.id === item.id) {
+            if (tempItem.docId === item.docId) {
                 return item
             } else { return tempItem }
         })
@@ -53,7 +53,7 @@ export const TodoListStateService = ({
 
     deleteItem: (item: TodoItem) => {
         emitNextState({
-            list: stateSource.value.list.filter(tempItem => tempItem.id !== item.id)
+            list: stateSource.value.list.filter(tempItem => tempItem.docId !== item.docId)
         })
     }
 })

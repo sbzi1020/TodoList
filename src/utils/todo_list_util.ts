@@ -8,7 +8,7 @@ const LOG_NAME = `ToDoListUtil`
 interface AddToDoItemResponse {
     success: boolean
     error?: string
-    data?: any
+    data?: string
 }
 
 //
@@ -25,16 +25,17 @@ const addToDoItem = async (item: TodoItem): Promise<AddToDoItemResponse> => {
 
     try {
         const response = await axios(request)
-        LogUtil.debug(
-            LOG_NAME,
-            `addToDoItem`,
-            `response: ${JSON.stringify(response, null, 4)}`,
-            LogTheme.TESTING,
-        )
+        // LogUtil.debug(
+        //     LOG_NAME,
+        //     `addToDoItem`,
+        //     `response: ${JSON.stringify(response, null, 4)}`,
+        //     LogTheme.TESTING,
+        // )
 
         if (response.data !== undefined) {
             const resp = response.data as AddToDoItemResponse
             result.success = resp.success
+            result.data = resp.data
 
             if (result.success !== true) {
                 result.error = `Add to do item fail.`

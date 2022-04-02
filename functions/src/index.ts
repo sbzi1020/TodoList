@@ -88,6 +88,7 @@ export const addToDoItem = CloudFunctionUtil
                 })
 
                 result.success = true
+                result.data = newItemDoc.id
                 res.status(200).json(result)
             }
             catch (error: any) {

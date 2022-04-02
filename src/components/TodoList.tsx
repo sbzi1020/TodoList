@@ -15,14 +15,18 @@ const TodoList = () => {
     // Subscription
     useEffect(() => {
         let subscription = TodoListStateService.$state.subscribe(
-            latestate => setUiState(latestate)
+            latestate => {
+                setUiState(latestate)
+                // console.log(`latestState: ${JSON.stringify(latestate, null, 4)}`)
+            }
         )
         return () => subscription.unsubscribe()
     }, [])
 
     //
     const onAddItem = async () => {
-        const newItem = {
+        const newItem: TodoItem = {
+            docId: '',
             id: '',
             text: inputValue,
             isFinished: false,
@@ -32,6 +36,10 @@ const TodoList = () => {
         const addResult = await ToDoListUtil.addToDoItem(newItem)
 
         if (addResult.success === true) {
+            if (typeof addResult.data === "string") {
+                newItem.docId = addResult.data
+            }
+
             TodoListStateService.addItem(newItem, () => {
                 if (inputRef.current) {
                     (inputRef.current as any).value = ''
