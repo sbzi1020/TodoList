@@ -45,23 +45,24 @@ export const TodoListStateService = ({
             if (typeof addResult.data === "string") {
                 newItem.docId = addResult.data
             }
+            // update state
+            const newList = [
+                ...stateSource.value.list,
+                {
+                    ...newItem,
+                    id: genernateId(),
+                }
+            ]
+
+            emitNextState({ list: newList })
+            if (callback) { callback() }
         }
-
-        // update state
-        const newList = [
-            ...stateSource.value.list,
-            {
-                ...newItem,
-                id: genernateId(),
-            }
-        ]
-
-        emitNextState({ list: newList })
-        if (callback) { callback() }
     },
 
-    updateItem: (item: TodoItem) => {
-
+    //
+    //
+    //
+    updateItem: async (item: TodoItem) => {
         const newList = stateSource.value.list.map((tempItem) => {
             if (tempItem.docId === item.docId) {
                 return item
@@ -70,6 +71,9 @@ export const TodoListStateService = ({
         emitNextState({ list: newList })
     },
 
+    //
+    //
+    //
     deleteItem: (item: TodoItem) => {
         emitNextState({
             list: stateSource.value.list.filter(tempItem => tempItem.docId !== item.docId)
