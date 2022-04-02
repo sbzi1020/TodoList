@@ -1,5 +1,4 @@
 import { runWith, RuntimeOptions, FunctionBuilder } from 'firebase-functions'
-
 //
 //
 //
