@@ -39,6 +39,12 @@ const TodoList = () => {
         TodoListStateService.updateItem(checkItem)
     }
 
+    //////
+    const onTextClick = (item: TodoItem) => {
+
+        TodoListStateService.updateItem(item)
+    }
+    //
     const renderList = () => {
         return (
             uiState.list.map((item, index) => (
@@ -51,6 +57,7 @@ const TodoList = () => {
             ))
         )
     }
+    //
     const onDeletedClick = (item: TodoItem) => {
         TodoListStateService.deleteItem(item)
     }
@@ -59,6 +66,7 @@ const TodoList = () => {
             onAddItem()
         }
     }
+    //
     return (
         <div className={`${LayoutStyles.vBoxContainer} ${classes.listContainer}`}>
             <div>

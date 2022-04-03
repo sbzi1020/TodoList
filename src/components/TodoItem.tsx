@@ -35,7 +35,8 @@ const TodoItemComponent = (props: TodoItemProps) => {
 
             />
             <div
-                className={props.item.isFinished ? `${classes.checkedText}` : `${classes.text}`}>
+                className={props.item.isFinished ? `${classes.checkedText}` : `${classes.text}`}
+            >
                 {`${props.item.id}`}
                 <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
                 {`${props.item.text}`}
