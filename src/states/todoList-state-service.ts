@@ -63,12 +63,16 @@ export const TodoListStateService = ({
     //
     //
     updateItem: async (item: TodoItem) => {
-        const newList = stateSource.value.list.map((tempItem) => {
-            if (tempItem.docId === item.docId) {
-                return item
-            } else { return tempItem }
-        })
-        emitNextState({ list: newList })
+        const updateResult = await ToDoListUtil.updateToDoItem(item)
+
+        if (updateResult.success === true) {
+            const newList = stateSource.value.list.map((tempItem) => {
+                if (tempItem.docId === item.docId) {
+                    return item
+                } else { return tempItem }
+            })
+            emitNextState({ list: newList })
+        }
     },
 
     //

@@ -2,19 +2,37 @@ import { makeStyles } from '@material-ui/core'
 
 export const generateStyles = makeStyles({
     itemContainer: {
+        display: 'flex',
+        flexDirection: 'row',
         justifyContent: 'flex-start',
         alignItems: 'center',
         position: 'relative',
+        padding: '0.4rem',
+        fontSize: '1rem',
     },
     deleteItem: {
-        alignSelf: 'flex-end',
-        position: 'absolute',
-        right: '1rem',
-        width: 10,
+        width: '2rem',
+        //right: '1rem',
         color: '#a7a7a7',
         cursor: 'pointer',
         "&:hover": {
             color: '#ea4c88',
+        },
+        '& svg': {
+        width: '1.2rem',
+        }
+    },
+    alarmIcon: {
+        width: '2rem',
+        //position: 'absolute',
+        //right: '4rem',
+        color: '#a7a7a7',
+        cursor: 'pointer',
+        "&:hover": {
+            color: '#ea4c88',
+        },
+        '& svg': {
+        width: '1.2rem',
         }
     },
     icon: {
@@ -46,10 +64,16 @@ export const generateStyles = makeStyles({
     //     }
     // },
     text: {
-        fontSize: '0.8rem',
+        flex: 1,
+        textAlign: 'left',
+        marginLeft: '0.5rem',
+        overflow: 'hidden',
     },
     checkedText: {
+        flex: 1,
+        textAlign: 'left',
         opacity: '0.4',
-        fontSize: '0.8rem',
+        marginLeft: '0.5rem',
+        textDecoration: 'line-through',
     }
 })

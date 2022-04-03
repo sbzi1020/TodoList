@@ -3,18 +3,17 @@ import { relative } from 'path'
 
 export const generateStyles = makeStyles({
     container: {
-        height: '100%',
-        alignItems: 'center',
+        boxSizing: 'border-box',
     },
     mainView: {
-        border: '1px solid blue',
-        justifyContent: 'center',
-        width: '16rem',
-        marginTop: '5rem',
-        alignItems: 'stretch',
+        height: '100%',
     },
     topbar: {
         backgroundColor: 'pink',
-        height: '2rem',
+        height: '3rem',
+        width: '100%',
+        position: 'fixed',
+        top: 0,
+        zIndex: 2,
     }
 })

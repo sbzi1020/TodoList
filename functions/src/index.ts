@@ -32,12 +32,7 @@ export const addToDoItem = CloudFunctionUtil
         // .onCall(async (reqBody: any, context) => {
         // functions.logger.debug(`reqBody: ${JSON.stringify(req.body, null, 4)}`)
 
-        //
-        // Cors settigns
-        //
-        res.set('Access-Control-Allow-Origin', '*');
-        res.set('Access-Control-Allow-Methods', 'POST,OPTIONS');
-        res.set('Access-Control-Allow-Headers', '*');
+        CloudFunctionUtil.setResponseCors(res)
 
         //
         // Print the reqeust info
@@ -94,6 +89,70 @@ export const addToDoItem = CloudFunctionUtil
             catch (error: any) {
                 result.success = false
                 result.error = error.message ? error.message : `Fail to add new item`
+                res.status(500).json(result)
+            }
+        }
+    })
+
+//
+//
+//
+export const updateToDoItem = CloudFunctionUtil
+    .createCloudFunction()
+    .https
+    .onRequest(async (req: Request, res: Response) => {
+        CloudFunctionUtil.setResponseCors(res)
+
+        //
+        // Print the reqeust info
+        //
+        console.log(`>>> request type: ${req.method}`)
+        console.log(`>>> request path: ${req.path}`)
+        console.log(`>>> request query: ${JSON.stringify(req.query, null, 4)}`)
+        if (req.method === "POST") {
+            console.log(`>>> request body: ${JSON.stringify(req.body, null, 4)}`)
+        }
+
+        // End connection immediately if not `POST`
+        if (req.method !== 'POST') {
+            console.log(`>>> Close connection because is NOT POST.`)
+            res.end();
+            return;
+        }
+
+        const result: HttpResult = ({
+            success: false
+        })
+
+        //
+        // Check post body
+        //
+        if (isEmptyAttr(req.body.docId) ||
+            isEmptyAttr(req.body.isFinished) ||
+            isEmptyAttr(req.body.text)) {
+            result.error = `Invalid update to do item.`
+            res.status(400).json(result)
+        } else {
+            // Get back firestore instance
+            const db = admin.firestore()
+
+            // Get back collection reference
+            // `/col/doc/col/doc`
+            const docRef = db.doc(`/todolist/${req.body.docId}`)
+
+            // Updateg doc
+            try {
+                await docRef.update({
+                    text: req.body.text,
+                    isFinished: req.body.isFinished
+                })
+
+                result.success = true
+                res.status(200).json(result)
+            }
+            catch (error: any) {
+                result.success = false
+                result.error = error.message ? error.message : `Fail to update new item`
                 res.status(500).json(result)
             }
         }

@@ -4,6 +4,7 @@ import { TodoItem } from '../types/types'
 import LayoutStyles from '../styles/layout.module.css'
 import { generateStyles } from '../styles/todoList.styles'
 import { TodoListStateService } from '../states/todoList-state-service'
+import AddIcon from '@material-ui/icons/Add';
 
 const TodoList = () => {
     const classes = generateStyles()
@@ -77,7 +78,9 @@ const TodoList = () => {
                     ref={inputRef}
                     onKeyDown={onKeyDown}
                 />
-                <button onClick={onAddItem}>Add</button>
+                <button onClick={onAddItem}>
+                    <AddIcon />
+                </button>
             </div>
         </div>)
 }

@@ -25,7 +25,6 @@ const TopBar = (props: TopBarProps) => {
         {/* menu icon */}
         {/* Subject name */}
         {/* userpage */}
-        Topbar
     </div>)
 }
 

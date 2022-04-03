@@ -1,4 +1,4 @@
-import { runWith, RuntimeOptions, FunctionBuilder } from 'firebase-functions'
+import { runWith, RuntimeOptions, FunctionBuilder, Response } from 'firebase-functions'
 //
 //
 //
@@ -15,6 +15,21 @@ const createCloudFunction = (
 //
 //
 //
-export const CloudFunctionUtil = {
-    createCloudFunction
+const setResponseCors = (res: Response) => {
+    //
+    // Cors settigns
+    //
+    res.set('Access-Control-Allow-Origin', '*');
+    res.set('Access-Control-Allow-Methods', 'POST,OPTIONS');
+    res.set('Access-Control-Allow-Headers', '*');
 }
+
+//
+//
+//
+export const CloudFunctionUtil = {
+    createCloudFunction,
+    setResponseCors,
+}
+
+
