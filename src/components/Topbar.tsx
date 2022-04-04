@@ -25,19 +25,20 @@ const TopBar = (props: TopBarProps) => {
     return (
 
         <div className={`${LayoutStyles.hBoxContainer} ${classes.topbarContainer}`}>
-        {/* menu icon */}
-        <div>
-            <MenuIcon />
-        </div>
-        {/* Subject name */}
-        <div>
-            Subject Name
-        </div>
-        {/* userpage */}
-        <div>
-            <FaceIcon />
-        </div>
-    </div>)
+            {/* menu icon */}
+
+            <MenuIcon
+                className={`${classes.menuIcon}`}
+            />
+            {/* Subject name */}
+            <div>
+                Subject Name
+            </div>
+            {/* userpage */}
+            <FaceIcon
+                className={`${classes.faceIcon}`}
+            />
+        </div>)
 }
 
 export default React.memo(TopBar)

@@ -8,12 +8,4 @@ export const generateStyles = makeStyles({
     mainView: {
         height: '100%',
     },
-    topbar: {
-        backgroundColor: 'pink',
-        height: '3rem',
-        width: '100%',
-        position: 'fixed',
-        top: 0,
-        zIndex: 2,
-    }
 })

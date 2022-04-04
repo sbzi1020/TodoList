@@ -21,7 +21,7 @@ const MainView = (props: MainViewProps) => {
     return (
         <div className={`${LayoutStyles.vBoxContainer} ${classes.container}`}>
             <div className={`${LayoutStyles.vBoxContainer} ${classes.mainView}`}>
-                <div className={`${LayoutStyles.hBoxContainer} ${classes.topbar}`}>
+                <div className={`${LayoutStyles.hBoxContainer}`}>
                     <Topbar />
                 </div>
 

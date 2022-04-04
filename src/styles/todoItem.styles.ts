@@ -9,6 +9,9 @@ export const generateStyles = makeStyles({
         position: 'relative',
         padding: '0.4rem',
         fontSize: '1rem',
+        '&:hover': {
+            backgroundColor: 'rgba(240, 240, 240, 0.5)',
+        }
     },
     deleteItem: {
         width: '2rem',
