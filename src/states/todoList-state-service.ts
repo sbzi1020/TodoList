@@ -5,7 +5,14 @@ import { ToDoListUtil } from '../utils/todo_list_util'
 let latestId = 0
 
 export interface TodoListState {
-    list: TodoList
+    // list: TodoList
+    list: Array<{
+        docId: string
+        id: string
+        text: string
+        isFinished: boolean
+        alarmTime: string
+    }>
 }
 
 const initState: TodoListState = {
@@ -37,6 +44,7 @@ export const TodoListStateService = ({
             id: '',
             text: itemText,
             isFinished: false,
+            alarmTime: '',
         }
 
         // Save to backend
@@ -82,5 +90,6 @@ export const TodoListStateService = ({
         emitNextState({
             list: stateSource.value.list.filter(tempItem => tempItem.docId !== item.docId)
         })
-    }
+    },
+
 })

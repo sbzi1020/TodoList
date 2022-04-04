@@ -14,6 +14,7 @@ export interface TodoItemProps {
     item: TodoItem,
     onCheckboxClick: (item: TodoItem) => void
     onDeletedClick: (item: TodoItem) => void
+    onAlarmTimeChange: (item: TodoItem) => void
 }
 
 /**
@@ -41,7 +42,7 @@ const TodoItemComponent = (props: TodoItemProps) => {
                 <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
                 {`${props.item.text}`}
             </div>
-            <AlarmComponent />
+            <AlarmComponent item={props.item} />
             <div className={classes.deleteItem}>
                 <DeleteIcon
                     onClick={() => props.onDeletedClick(props.item)}

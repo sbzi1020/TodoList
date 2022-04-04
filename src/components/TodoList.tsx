@@ -39,6 +39,14 @@ const TodoList = () => {
         TodoListStateService.updateItem(checkItem)
     }
 
+    const onAlarmTimeChange = (item: TodoItem) => {
+        const alarmUpdatedItem = {
+            ...item,
+            alarmTime: item.alarmTime
+        }
+        TodoListStateService.updateItem(alarmUpdatedItem)
+    }
+
     //////
     const onTextClick = (item: TodoItem) => {
 
@@ -53,6 +61,7 @@ const TodoList = () => {
                     item={item}
                     onCheckboxClick={onCheckboClick}
                     onDeletedClick={onDeletedClick}
+                    onAlarmTimeChange={onAlarmTimeChange}
                 />
             ))
         )

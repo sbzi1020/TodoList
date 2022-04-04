@@ -8,35 +8,49 @@ import AlarmIcon from '@material-ui/icons/AccessAlarm';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import TextField from '@material-ui/core/TextField';
 import { generateStyles } from '../styles//alarm.styles'
+import { TodoListStateService } from '../states/todoList-state-service'
+import { TodoItem } from '../types/types'
+
 /**
  * @export
  * @interface AlarmProps
  */
 export interface AlarmProps {
-    classes?: any
+    item: TodoItem
 }
 
-/**
- * 
- * @param {Alarm}Props props 
- */
+const isvalidAlarmTime = (alarmTimeIsoString: string): boolean => {
+    return Boolean(alarmTimeIsoString && alarmTimeIsoString.trim() !== '')
+}
+
 const Alarm = (props: AlarmProps) => {
+
 
     const classes = generateStyles()
     const [open, setOpen] = useState(false)
-    const [selectDate, setSelectDate] = useState(new Date().toISOString())
+
+    const [selectDate, setSelectDate] = useState(
+        isvalidAlarmTime(props.item.alarmTime) ? props.item.alarmTime.trim() :
+            new Date().toISOString()
+    )
+
+    const [hasValidAlarmTime, setHasValidAlarmTime] = useState(isvalidAlarmTime(props.item.alarmTime) ? true : false)
 
     const timeRef = useRef(null)
 
-    useEffect(() => {
-
-    }, [])
-
     const handleOk = () => {
+        // Close the dialog
         setOpen(false)
-        // Save the time
+
+        // Save the time back to uiState
         //console.log(`${timeRef.current ? (timeRef.current as any).value : ''}`)
         setSelectDate((timeRef.current as any).value)
+
+        // Update item (with the updated `alarmTime`)
+        TodoListStateService.updateItem({
+            ...props.item,
+            alarmTime: (timeRef.current as any).value
+        })
     }
 
     const handleClickOpen = () => {
@@ -51,7 +65,11 @@ const Alarm = (props: AlarmProps) => {
         <div>
             <AlarmIcon
                 onClick={handleClickOpen}
-                className={classes.alarm}
+                className={
+                    hasValidAlarmTime === true ?
+                        classes.alarmWithColor :
+                        classes.alarm
+                }
             />
             <Dialog
                 open={open}
