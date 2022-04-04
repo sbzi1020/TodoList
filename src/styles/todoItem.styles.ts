@@ -25,19 +25,6 @@ export const generateStyles = makeStyles({
         width: '1.2rem',
         }
     },
-    alarmIcon: {
-        width: '2rem',
-        //position: 'absolute',
-        //right: '4rem',
-        color: '#a7a7a7',
-        cursor: 'pointer',
-        "&:hover": {
-            color: '#ea4c88',
-        },
-        '& svg': {
-        width: '1.2rem',
-        }
-    },
     icon: {
         borderRadius: 6,
         width: 16,

@@ -5,7 +5,7 @@ import { generateStyles } from '../styles//todoItem.styles'
 import Checkbox from '@material-ui/core/Checkbox'
 import DeleteIcon from '@material-ui/icons/Delete'
 import clsx from 'clsx'
-import AccessAlarmIcon from '@material-ui/icons/AccessAlarm';
+import AlarmComponent from './alarm'
 /**
  * @export
  * @interface TodoItemProps
@@ -41,10 +41,7 @@ const TodoItemComponent = (props: TodoItemProps) => {
                 <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
                 {`${props.item.text}`}
             </div>
-
-            <div className={classes.alarmIcon}>
-                <AccessAlarmIcon />
-            </div>
+            <AlarmComponent />
             <div className={classes.deleteItem}>
                 <DeleteIcon
                     onClick={() => props.onDeletedClick(props.item)}
