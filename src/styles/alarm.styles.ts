@@ -1,4 +1,4 @@
-import  {makeStyles} from '@material-ui/core'
+import { makeStyles } from '@material-ui/core'
 
 export const generateStyles = makeStyles({
     container: {
@@ -19,8 +19,12 @@ export const generateStyles = makeStyles({
             color: '#ea4c88',
         },
         '& svg': {
-        width: '1.2rem',
+            width: '1.2rem',
         }
     },
+    alarmWithColor: {
+        width: '2rem',
+        color: '#ea4c88',
+    }
 
 })

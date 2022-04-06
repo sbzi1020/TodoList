@@ -25,19 +25,29 @@ const isvalidAlarmTime = (alarmTimeIsoString: string): boolean => {
 
 const Alarm = (props: AlarmProps) => {
 
+    const curentTimeString = new Date().toISOString()
 
     const classes = generateStyles()
     const [open, setOpen] = useState(false)
 
     const [selectDate, setSelectDate] = useState(
-        isvalidAlarmTime(props.item.alarmTime) ? props.item.alarmTime.trim() :
-            new Date().toISOString()
+        isvalidAlarmTime(props.item.alarmTime) ? props.item.alarmTime.trim() : curentTimeString
     )
 
     const [hasValidAlarmTime, setHasValidAlarmTime] = useState(isvalidAlarmTime(props.item.alarmTime) ? true : false)
 
     const timeRef = useRef(null)
 
+    //
+    // 
+    //
+    useEffect(() => {
+        setHasValidAlarmTime(selectDate !== curentTimeString)
+        console.log(`selectDate: ${selectDate}`)
+        console.log(`curentTimeString: ${curentTimeString}`)
+    }, [selectDate])
+
+    //
     const handleOk = () => {
         // Close the dialog
         setOpen(false)
