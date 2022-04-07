@@ -85,13 +85,21 @@ const TodoList = () => {
         }
     }
     //
+    const checkedTotal = () => {
+        const checkedNumber = uiState.list.filter(item => {
+            return item.isFinished == true
+        }).length
 
-
+        return checkedNumber
+    }
     return (
         <div className={`${LayoutStyles.vBoxContainer} ${classes.listContainer}`}>
             {/* ItemCounter */}
             {/* SearchBar */}
-            <Info />
+            <Info 
+                total={uiState.list.length}
+                checkedTotal={checkedTotal()}
+                />
             {/* List Item */}
             <div className={`${classes.renderList}`}>
                 {renderList()}

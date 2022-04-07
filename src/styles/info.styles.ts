@@ -16,6 +16,7 @@ export const generateStyles = makeStyles((theme) => ({
         '& div': {
             fontSize: '3rem',
             verticalAlign: 'text-bottom',
+            height: '3rem',
         },
         display:'flex',
         flexDirection: 'row',

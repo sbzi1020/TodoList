@@ -9,6 +9,8 @@ import { TodoListStateService } from '../states/todoList-state-service'
  * @interface InfoProps
  */
 export interface InfoProps {
+    total: number
+    checkedTotal: number
 }
 
 /**
@@ -18,7 +20,6 @@ export interface InfoProps {
 const Info = (props: InfoProps) => {
 
     const classes = generateStyles()
-    const searchRef = useRef(null)
 
     //
     const onSearchChange = (keyword: string) => {
@@ -28,10 +29,14 @@ const Info = (props: InfoProps) => {
 
     return (
         <div className={`${LayoutStyles.hBoxContainer} ${classes.infoContainer}`}>
-            <div className={classes.count}>
-                <div>29</div>
+            <div
+                className={classes.count}
+            >
+                <div>
+                    {props.checkedTotal}
+                </div>
                 <span>/</span>
-                Total
+                {props.total}
             </div>
             <div
                 className={classes.search}
@@ -43,7 +48,7 @@ const Info = (props: InfoProps) => {
                         input: classes.inputInput,
                     }}
                     inputProps={{ 'aria-label': 'search' }}
-                onChange={(e:any) => onSearchChange(
+                    onChange={(e: any) => onSearchChange(
                         e.target.value
                     )}
                 />
