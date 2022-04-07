@@ -1,16 +1,14 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import LayoutStyles from '../styles/layout.module.css'
 import { generateStyles } from '../styles/info.styles'
 import InputBase from '@material-ui/core/InputBase';
 import SearchIcon from '@material-ui/icons/Search';
-import { TodoItem } from '../types/types'
 import { TodoListStateService } from '../states/todoList-state-service'
 /**
  * @export
  * @interface InfoProps
  */
 export interface InfoProps {
-    item: TodoItem
 }
 
 /**
@@ -20,14 +18,14 @@ export interface InfoProps {
 const Info = (props: InfoProps) => {
 
     const classes = generateStyles()
-    const [state, setState] = useState()
+    const searchRef = useRef(null)
 
-    useEffect(() => {
-
-    }, [])
-    const onSearchChange = (item: TodoItem) => {
-        TodoListStateService.searchItem(item)
+    //
+    const onSearchChange = (keyword: string) => {
+        console.log(`${keyword}`)
+        TodoListStateService.searchItem(keyword)
     }
+
     return (
         <div className={`${LayoutStyles.hBoxContainer} ${classes.infoContainer}`}>
             <div className={classes.count}>
@@ -37,7 +35,6 @@ const Info = (props: InfoProps) => {
             </div>
             <div
                 className={classes.search}
-                onChange={(e:any) => onSearchChange(props.item)}
             >
                 <InputBase
                     placeholder="Search…"
@@ -46,6 +43,9 @@ const Info = (props: InfoProps) => {
                         input: classes.inputInput,
                     }}
                     inputProps={{ 'aria-label': 'search' }}
+                onChange={(e:any) => onSearchChange(
+                        e.target.value
+                    )}
                 />
                 <div className={classes.searchIcon}>
                     <SearchIcon />

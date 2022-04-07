@@ -10,10 +10,6 @@ export const generateStyles = makeStyles({
         flex: 1,
     },
 
-    infoContainer: {
-        flexDirection:'row',
-        marginTop: '2rem',
-    },
     addContainer: {
         '& input': {
             padding: '0.5rem',

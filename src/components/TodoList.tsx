@@ -50,7 +50,20 @@ const TodoList = () => {
 
     //
     const renderList = () => {
-        return (
+        const isInSearchMode = uiState.searchKeyword.trim() !== ''
+        console.log(`isInSearchMode: ${isInSearchMode}`)
+
+        return isInSearchMode ? (
+            uiState.searchList.map((item, index) => (
+                <TodoItemComponent
+                    key={index}
+                    item={item}
+                    onCheckboxClick={onCheckboClick}
+                    onDeletedClick={onDeletedClick}
+                    onAlarmTimeChange={onAlarmTimeChange}
+                />
+            ))
+        ) : (
             uiState.list.map((item, index) => (
                 <TodoItemComponent
                     key={index}
@@ -78,7 +91,7 @@ const TodoList = () => {
         <div className={`${LayoutStyles.vBoxContainer} ${classes.listContainer}`}>
             {/* ItemCounter */}
             {/* SearchBar */}
-            <Info item={item}/>
+            <Info />
             {/* List Item */}
             <div className={`${classes.renderList}`}>
                 {renderList()}

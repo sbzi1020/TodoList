@@ -5,18 +5,15 @@ import { ToDoListUtil } from '../utils/todo_list_util'
 let latestId = 0
 
 export interface TodoListState {
-    // list: TodoList
-    list: Array<{
-        docId: string
-        id: string
-        text: string
-        isFinished: boolean
-        alarmTime: string
-    }>
+    list: TodoList
+    searchList: TodoList
+    searchKeyword: string
 }
 
 const initState: TodoListState = {
-    list: []
+    list: [],
+    searchList: [],
+    searchKeyword: '',
 }
 
 const stateSource: BehaviorSubject<TodoListState> = new BehaviorSubject(initState)
@@ -62,7 +59,11 @@ export const TodoListStateService = ({
                 }
             ]
 
-            emitNextState({ list: newList })
+            emitNextState({
+                ...stateSource.value,
+                list: newList
+            })
+
             if (callback) { callback() }
         }
     },
@@ -79,7 +80,10 @@ export const TodoListStateService = ({
                     return item
                 } else { return tempItem }
             })
-            emitNextState({ list: newList })
+            emitNextState({
+                ...stateSource.value,
+                list: newList
+            })
         }
     },
 
@@ -88,13 +92,22 @@ export const TodoListStateService = ({
     //
     deleteItem: (item: TodoItem) => {
         emitNextState({
+            ...stateSource.value,
             list: stateSource.value.list.filter(tempItem => tempItem.docId !== item.docId)
         })
     },
-    searchItem: (item: TodoItem) => {
-        emitNextState({
-            list: stateSource.value.list.filter(tempItem => tempItem.text !== item.text)
-        })
+
+    searchItem: (searchKeyword: string) => {
+        const newState = {
+            // Copy the latest state that includs the orginal `list`
+            ...stateSource.value,
+            searchList: stateSource.value.list.filter(tempItem => tempItem.text.toLowerCase().indexOf(searchKeyword.toLowerCase()) != -1),
+            searchKeyword,
+        }
+
+        console.log(`newState: ${JSON.stringify(newState, null, 4)}`)
+
+        emitNextState(newState)
     }
 
 })
