@@ -91,5 +91,10 @@ export const TodoListStateService = ({
             list: stateSource.value.list.filter(tempItem => tempItem.docId !== item.docId)
         })
     },
+    searchItem: (item: TodoItem) => {
+        emitNextState({
+            list: stateSource.value.list.filter(tempItem => tempItem.text !== item.text)
+        })
+    }
 
 })

@@ -5,6 +5,7 @@ import LayoutStyles from '../styles/layout.module.css'
 import { generateStyles } from '../styles/todoList.styles'
 import { TodoListStateService } from '../states/todoList-state-service'
 import AddIcon from '@material-ui/icons/Add';
+import Info from './info'
 
 const TodoList = () => {
     const classes = generateStyles()
@@ -47,11 +48,6 @@ const TodoList = () => {
         TodoListStateService.updateItem(alarmUpdatedItem)
     }
 
-    //////
-    const onTextClick = (item: TodoItem) => {
-
-        TodoListStateService.updateItem(item)
-    }
     //
     const renderList = () => {
         return (
@@ -76,12 +72,13 @@ const TodoList = () => {
         }
     }
     //
+
+
     return (
         <div className={`${LayoutStyles.vBoxContainer} ${classes.listContainer}`}>
-            <div>
-                {/* ItemCounter */}
-                {/* SearchBar */}
-            </div>
+            {/* ItemCounter */}
+            {/* SearchBar */}
+            <Info item={item}/>
             {/* List Item */}
             <div className={`${classes.renderList}`}>
                 {renderList()}
