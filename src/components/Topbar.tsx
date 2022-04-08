@@ -3,17 +3,11 @@ import MenuIcon from '@material-ui/icons/Menu';
 import FaceIcon from '@material-ui/icons/Face';
 import LayoutStyles from '../styles/layout.module.css'
 import { generateStyles } from '../styles/topbar.styles'
-/**
- * @export
- * @interface TopBarProps
- */
+import Menu from './menuDrawer'
+
 export interface TopBarProps {
 }
 
-/**
- * 
- * @param {TopBar}Props props 
- */
 const TopBar = (props: TopBarProps) => {
     const classes = generateStyles()
     const [state, setState] = useState()
@@ -26,10 +20,13 @@ const TopBar = (props: TopBarProps) => {
 
         <div className={`${LayoutStyles.hBoxContainer} ${classes.topbarContainer}`}>
             {/* menu icon */}
+            <Menu />
+            {/* 
 
             <MenuIcon
                 className={`${classes.menuIcon}`}
             />
+*/}
             {/* Subject name */}
             <div>
                 Subject Name

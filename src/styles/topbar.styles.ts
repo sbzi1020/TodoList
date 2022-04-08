@@ -12,10 +12,6 @@ export const generateStyles = makeStyles({
         top: 0,
         zIndex: 2,
     },
-    menuIcon: {
-        marginLeft: '0.5rem',
-        fontSize: '2rem',
-    },
     faceIcon: {
         marginRight: '0.5rem',
         fontSize: '2rem',
