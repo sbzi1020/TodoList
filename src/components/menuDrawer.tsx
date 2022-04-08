@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import clsx from 'clsx';
 import Drawer from '@material-ui/core/Drawer';
-import Button from '@material-ui/core/Button';
 import List from '@material-ui/core/List';
 import Divider from '@material-ui/core/Divider';
 import ListItem from '@material-ui/core/ListItem';
@@ -27,9 +26,21 @@ const MenuDrawer = () => {
             <div
                 role="presentation"
                 onClick={toggleDrawer}
+                onKeyDown={toggleDrawer}
+                className={`${classes.listContainer}`}
             >
-                <div>1</div>
-                <div>2</div>
+
+                    <div>Subject</div>
+
+                <Divider style={{ 'width': '10rem' }} />
+                <List
+
+                className={`${classes.list}`}
+                >
+                    <div>1</div>
+                    <div>1</div>
+                </List>
+
             </div>
         )
     }
@@ -43,6 +54,7 @@ const MenuDrawer = () => {
                 anchor='left'
                 open={open}
                 onClose={toggleDrawer}
+                className={`${classes.drawer}`}
             >
                 {list()}
             </Drawer>
