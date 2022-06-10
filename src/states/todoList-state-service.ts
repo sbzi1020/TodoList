@@ -35,6 +35,13 @@ export const TodoListStateService = ({
 
     getLatest: (): TodoListState => latestState,
 
+    reload: (newList: TodoList) => {
+        emitNextState({
+            ...stateSource.value,
+            list: newList
+        })
+    },
+
     addItem: async (itemText: string, callback: any) => {
         const newItem: TodoItem = {
             docId: '',
@@ -47,22 +54,22 @@ export const TodoListStateService = ({
         // Save to backend
         const addResult = await ToDoListUtil.addToDoItem(newItem)
         if (addResult.success === true) {
-            if (typeof addResult.data === "string") {
-                newItem.docId = addResult.data
-            }
-            // update state
-            const newList = [
-                ...stateSource.value.list,
-                {
-                    ...newItem,
-                    id: genernateId(),
-                }
-            ]
+            // if (typeof addResult.data === "string") {
+            //     newItem.docId = addResult.data
+            // }
+            // // update state
+            // const newList = [
+            //     ...stateSource.value.list,
+            //     {
+            //         ...newItem,
+            //         // id: genernateId(),
+            //     }
+            // ]
 
-            emitNextState({
-                ...stateSource.value,
-                list: newList
-            })
+            // emitNextState({
+            //     ...stateSource.value,
+            //     list: newList
+            // })
 
             if (callback) { callback() }
         }

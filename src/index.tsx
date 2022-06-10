@@ -3,6 +3,9 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import {FirebaseClientUtil} from './utils/firebase_util'
+
+FirebaseClientUtil.init()
 
 ReactDOM.render(
   <React.StrictMode>

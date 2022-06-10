@@ -144,7 +144,8 @@ export const updateToDoItem = CloudFunctionUtil
             try {
                 await docRef.update({
                     text: req.body.text,
-                    isFinished: req.body.isFinished
+                    isFinished: req.body.isFinished,
+                    alarmTime: req.body.alarmTime,
                 })
 
                 result.success = true

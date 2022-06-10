@@ -6,8 +6,11 @@ import { generateStyles } from '../styles/todoList.styles'
 import { TodoListStateService } from '../states/todoList-state-service'
 import AddIcon from '@material-ui/icons/Add';
 import Info from './info'
+import { FirebaseClientUtil } from '../utils/firebase_util'
 
 const TodoList = () => {
+    let queryUnsubscriber: any = null
+
     const classes = generateStyles()
     const [uiState, setUiState] = useState(TodoListStateService.getLatest())
     const [inputValue, setInputValue] = useState('')
@@ -15,13 +18,25 @@ const TodoList = () => {
 
     // Subscription
     useEffect(() => {
+        FirebaseClientUtil.queryToDoList()
+            .then(unsubscriber => {
+                queryUnsubscriber = unsubscriber
+            })
+            .catch(err => console.log(`Error happen: `, err))
+
         let subscription = TodoListStateService.$state.subscribe(
             latestate => {
                 setUiState(latestate)
                 // console.log(`latestState: ${JSON.stringify(latestate, null, 4)}`)
             }
         )
-        return () => subscription.unsubscribe()
+        return () => {
+            subscription.unsubscribe()
+
+            if (queryUnsubscriber !== null) {
+                queryUnsubscriber()
+            }
+        }
     }, [])
 
     //
@@ -96,10 +111,10 @@ const TodoList = () => {
         <div className={`${LayoutStyles.vBoxContainer} ${classes.listContainer}`}>
             {/* ItemCounter */}
             {/* SearchBar */}
-            <Info 
+            <Info
                 total={uiState.list.length}
                 checkedTotal={checkedTotal()}
-                />
+            />
             {/* List Item */}
             <div className={`${classes.renderList}`}>
                 {renderList()}
